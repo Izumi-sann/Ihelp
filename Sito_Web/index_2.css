@@ -1,0 +1,173 @@
+html body{
+  background-image: url(File\ multimediali.jpg); 
+}
+
+#BARRA_SUP {
+  display: flex;
+  justify-content: flex-start; /* Allinea tutto a sinistra */
+  align-items: center; /* Centra verticalmente tutti gli elementi */
+  padding: 10px; /* Margine intorno agli elementi */
+  position: relative; /* Necessario per posizionamenti interni */
+}
+
+.hamburger-label {
+  width: 40px; /* Dimensione più piccola per l'hamburger */
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 15px; /* Spazio tra l'hamburger e la barra di ricerca */
+  position: relative; /* Necessario per i figli */
+}
+
+.hamburger-label div {
+  width: 35px;
+  height: 4px; /* Barre più sottili */
+  background: linear-gradient(0deg, rgb(255, 254, 254) 0%, rgb(255, 255, 255) 100%);
+  position: absolute;
+
+}
+
+.line1, .line2, .line3 {
+  transition: all 0.3s;
+}
+
+.line1 {
+  margin-top: -14px; /* Spazio tra le linee */
+  margin-left: 17px;
+}
+.line2 {
+  margin-top: 0px; /* Spazio tra le linee */
+  margin-left: 17px;
+}
+
+.line3 {
+  margin-top: 14px; /* Spazio tra le linee */
+  margin-left: 17px;
+}
+
+.BARRA_RICERCA {
+  position: relative;
+  width: 40%; /* Larghezza della barra di ricerca */
+  height: 40px; /* Altezza ridotta */
+  border-radius: 30px; /* Arrotondamento */
+  background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
+  box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.5);
+  padding: 5px 10px; /* Riduce il padding */
+  display: flex;
+  align-items: center; /* Centra verticalmente l'input e l'icona */
+}
+
+.input {
+  padding: 5px 10px; /* Riduce lo spazio interno */
+  font-size: 16px; /* Dimensione del testo più piccola */
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #9EBCD9;
+  border-radius: 30px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.search__icon {
+  width: 40px; /* Ridotta la dimensione dell'icona */
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 15px;
+
+}
+
+/*MENU' RAPIDO*/
+.button-menu {
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  background-color: rgb(214, 229, 247);
+  box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.5);
+  color: #1e1e1e;
+  font-size: 30px;
+  font-weight: 700;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.checkbox {
+  position: absolute;
+  box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.5);
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.option {
+  position: absolute;
+  margin: 5px;
+  background-color: rgb(214, 229, 247);
+  z-index: -1;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.checkbox:hover ~ .button-menu,
+.checkbox:checked ~ .button-menu {
+  background-color: rgb(214, 229, 247);
+  scale: 0.98;
+  box-shadow: none;
+}
+
+.checkbox:not(:checked) ~ .button-menu::before {
+  content: "★";
+  padding-bottom: 5px;
+}
+
+.checkbox:checked ~ .button-menu::after {
+  content: "★";
+  scale: 0.98;
+  padding-bottom: 5px;
+  box-shadow: none;
+}
+
+.checkbox:not(:checked) ~ .option {
+  box-shadow: none;
+}
+
+.option:hover,
+.option:active,
+.option:focus {
+  box-shadow: none;
+  scale: 0.98;
+}
+
+.checkbox:checked ~ .option-a {
+  transition-delay: 0.1s;
+  transform: translateY(70px);
+}
+
+.checkbox:checked ~ .option-b {
+  transition-delay: 0.2s;
+  transform: translateY(140px);
+}
+
+.checkbox:checked ~ .option-c {
+  transition-delay: 0.3s;
+  transform: translateY(210px);
+}
+
+.RAPIDO{
+  margin: 10px;
+}
