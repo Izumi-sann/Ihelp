@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IHELP</title>
-    <link rel="stylesheet" href="index_2.css">
+    <title>PROVA_2</title>
+    <link rel="stylesheet" href="PROVA2.css">
 
 </head>
 
@@ -29,9 +29,37 @@
                         <span></span>
                     </label>
                     <div class="menu-items">
+                        <button class="close-menu">&times;</button>
                         <a href="#Account">Account</a>
                         <a href="#Preferiti">Preferiti</a>
-                        <a href="#Servizi">Servizi</a>
+                        <a href="#Servizi" class="services-toggle">Servizi</a>
+
+
+                        <button class="Lingua" onclick="openPopup()">Seleziona Lingua</button>
+                        <div class="overlay" id="languagePopup">
+                            <div class="popup">
+                                <div class="popup-header">Seleziona la tua lingua</div>
+                                <div class="popup-content">
+                                    <ul>
+                                        <li>Italiano</li>
+                                        <li>English</li>
+                                        <li>Français</li>
+                                        <li>Español</li>
+                                        <li>Deutsch</li>
+                                        <li>Português</li>
+                                        <li>中文</li>
+                                        <li>日本語</li>
+                                        <li>한국어</li>
+                                        <li>Русский</li>
+                                    </ul>
+                                </div>
+                                <div class="popup-footer">
+                                    <button onclick="closePopup()">Chiudi</button>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <a href="#Impostazioni">Impostazioni</a>
                         <a href="#Informazioni">Info su IHELP</a>
                         <a href="#Partner">Partner</a>
@@ -52,10 +80,25 @@
         <div class="RAPIDO">
             <input type="checkbox" class="checkbox" />
             <span class="button-menu"></span>
-                <button class="option-a option">PARCHEGGI</button>
-                <button class="option-b option">RAMPE</button>
-                <button class="option-c option">ASCENSORI</button>
+                <button class="option-a option">1</button>
+                <button class="option-b option">2</button>
+                <button class="option-c option">3</button>
         </div>
     </div>
+
+
+    <script src="button.js" defer></script>
+    <script src="servizi.js" defer></script>
+    <script>
+        function openPopup() {
+            document.getElementById('languagePopup').style.display = 'flex';
+        }
+    
+        function closePopup() {
+            document.getElementById('languagePopup').style.display = 'none';
+        }
+    </script>
+
+
 </body>
 </html>

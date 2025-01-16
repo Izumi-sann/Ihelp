@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IHELP</title>
-    <link rel="stylesheet" href="index_2.css">
+    <title>PROVA</title>
+    <link rel="stylesheet" href="PROVA.css">
 
 </head>
 
@@ -29,9 +29,15 @@
                         <span></span>
                     </label>
                     <div class="menu-items">
+                        <button class="close-menu">&times;</button>
                         <a href="#Account">Account</a>
                         <a href="#Preferiti">Preferiti</a>
-                        <a href="#Servizi">Servizi</a>
+                        <a href="#Servizi" class="services-toggle">Servizi</a>
+                        <div id="services-menu" class="submenu">
+                            <a href="#Servizio1">Servizio 1</a>
+                            <a href="#Servizio2">Servizio 2</a>
+                            <a href="#Servizio3">Servizio 3</a>
+                        </div>
                         <a href="#Impostazioni">Impostazioni</a>
                         <a href="#Informazioni">Info su IHELP</a>
                         <a href="#Partner">Partner</a>
@@ -52,10 +58,14 @@
         <div class="RAPIDO">
             <input type="checkbox" class="checkbox" />
             <span class="button-menu"></span>
-                <button class="option-a option">PARCHEGGI</button>
-                <button class="option-b option">RAMPE</button>
-                <button class="option-c option">ASCENSORI</button>
+                <button class="option-a option">1</button>
+                <button class="option-b option">2</button>
+                <button class="option-c option">3</button>
         </div>
     </div>
+
+    <script src="button.js" defer></script>
+    <script src="servizi.js" defer></script>
+
 </body>
 </html>
