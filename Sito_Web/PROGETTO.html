@@ -100,9 +100,9 @@
       <div class="RAPIDO">
           <input type="checkbox" class="checkbox" />
           <span class="button-menu"></span>
-              <input type="checkbox" class="checkbox_option ch-option-a"/>
-              <input type="checkbox" class="checkbox_option ch-option-b"/>
-              <input type="checkbox" class="checkbox_option ch-option-c"/>
+              <input type="checkbox" id="chbox_a" class="checkbox_option ch-option-a"/>
+              <input type="checkbox" id="chbox_b" class="checkbox_option ch-option-b"/>
+              <input type="checkbox" id="chbox_c" class="checkbox_option ch-option-c"/>
 
               <button class="option-a option">1</button>
               <button class="option-b option">2</button>
@@ -124,8 +124,6 @@
   </script>
 
 <!----------------------------------------------------------------------------------------------------->
-
-const checkbox_a =
 
 
 <!----------------------------------------------------------------------------------------------------->
@@ -153,6 +151,32 @@ const checkbox_a =
 
 
 /*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
+const checkboxes = document.querySelectorAll('.checkbox_option');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', handleCheckboxCheck);
+});
+
+function handleCheckboxCheck(event) {
+    const checkbox = event.target;
+
+    if (checkbox.checked && checkbox.id === 'chbox_a') {
+        console.log(`${checkbox.id} è stata selezionata.`);
+        HideMarkers(redIcon);
+    } else {
+        console.log(`${checkbox.id} è stata deselezionata.`);
+    }
+}
+
+function HideMarkers(marker_type) {
+    markers.forEach(
+      function(marker) {
+        if (marker.icon == marker_type) {
+            marker.setOpacity(0);
+        }
+    });
+    hideMenu();
+}
 
 
 

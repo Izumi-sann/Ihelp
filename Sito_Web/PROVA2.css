@@ -111,6 +111,10 @@
     padding-bottom: 5px;
   }
   
+  #chbox_a:checked{
+    
+  }
+
   .checkbox:checked ~ .button-menu::after {
     content: "★";
     scale: 0.98;
