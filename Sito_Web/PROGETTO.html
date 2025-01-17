@@ -128,10 +128,12 @@
 
 <!----------------------------------------------------------------------------------------------------->
 
-    <div id="map"></div>
+  <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    /*--------------------------------------------INIZIO SCRIPT---------------------------------------------*/
+
     // Crea la mappa
     const map = L.map('map').setView([45.6511, 9.594417], 16);
 
@@ -152,30 +154,39 @@
 
 /*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
 const checkboxes = document.querySelectorAll('.checkbox_option');
-
+ 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', handleCheckboxCheck);
 });
 
 function handleCheckboxCheck(event) {
     const checkbox = event.target;
+    const type = checkbox.id == 'chbox_a' ? 'red' : checkbox.id == 'chbox_b' ? 'blue' : 'green';
 
-    if (checkbox.checked && checkbox.id === 'chbox_a') {
-        console.log(`${checkbox.id} è stata selezionata.`);
-        HideMarkers(redIcon);
-    } else {
-        console.log(`${checkbox.id} è stata deselezionata.`);
-    }
+    if (checkbox.checked)
+      HideMarkers(type);
+    else
+        ShowMarkers(type);
 }
 
 function HideMarkers(marker_type) {
     markers.forEach(
       function(marker) {
-        if (marker.icon == marker_type) {
-            marker.setOpacity(0);
+        if (marker.type == marker_type) {
+          marker.setOpacity(0);
+          marker.closePopup();
         }
     });
     hideMenu();
+}
+
+function ShowMarkers(marker_type){
+  markers.forEach(
+      function(marker) {
+        if (marker.type == marker_type) {
+            marker.setOpacity(100);
+        }
+    });
 }
 
 
@@ -197,6 +208,7 @@ function HideMarkers(marker_type) {
           popupAnchor: [1, -34], // Posizione del popup
           shadowSize: [41, 41] // Dimensioni dell'ombra
           });
+    
   /*-----------------------------------------------------------*/
 
 
@@ -323,6 +335,7 @@ function HideMarkers(marker_type) {
       const name = "Edoardo"; // Nome da aggiungere al popup
       // Crea il marker
       var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
+      marker_r.type = "red";
       // Funzione per calcolare il tempo trascorso
       function getElapsedTime(startTime) {
           const currentTime = new Date();
@@ -361,6 +374,7 @@ function HideMarkers(marker_type) {
               const name = "Edoardo"; // Nome da aggiungere al popup
               // Crea il marker
               var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
+              marker_r.type = "blue"; //assegna tipo
               // Funzione per calcolare il tempo trascorso
               function getElapsedTime(startTime) {
                   const currentTime = new Date();
@@ -399,6 +413,7 @@ function HideMarkers(marker_type) {
               const name = "Edoardo"; // Nome da aggiungere al popup
               // Crea il marker
               var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
+              marker_r.type = "green"; //assegna tipo
               // Funzione per calcolare il tempo trascorso
               function getElapsedTime(startTime) {
                   const currentTime = new Date();
@@ -430,10 +445,8 @@ function HideMarkers(marker_type) {
   
   /*-----------------------------------------------------------*/
 
-
-                } else {
+                } else 
                   hideMenu();
-                }
             });
 
 /*-----------------------------------------------------------------------------------------------------------*/
@@ -461,8 +474,8 @@ function HideMarkers(marker_type) {
         hideMenu();
       } 
       
-      
   /*-----------------------------------------------------------*/
+
 
   /*--------------------MARKER ON------------------------------*/
 
@@ -472,11 +485,7 @@ function HideMarkers(marker_type) {
           marker.setOpacity(1); // Mostra il marker
         });
       }
-    
 
-    
-    
-    
     });
 
   /*-----------------------------------------------------------*/
