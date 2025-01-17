@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-------------------------------------------HEAD DEL SITO---------------------------------------------------->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Map with Zoom-Based Pin Visibility</title>
+
+  <!-----------------------------------------STILI DELLA PAGINA----------------------------------------------->
+
+    <!--------------------LEAFLET CSS----------------------------->
+
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!------------------------------------------------------------>
+
+
+    <!--------------------PROVA_2 CSS----------------------------->
+
+      <link rel="stylesheet" href="PROVA2.css" />
+
+    <!------------------------------------------------------------>
+
+  <!---------------------------------------------------------------------------------------------------------->
+
+  </head>
+
+<!----------------------------------------------FINE HEAD----------------------------------------------------->
+
+
+
+
+<!--------------------------------------------BODY DEL SITO--------------------------------------------------->
+
+<body>
+
+<!--------------------------------------------MENU' GRAFICO--------------------------------------------------->
+
+  <div id="MAPS">
+      <div id="BARRA_SUP">
+          <div class="BARRA_RICERCA">
+              <div class="MENU">  
+                <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+                  <label for="menu-toggle" class="menu-hamburger">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </label>
+                  <div class="menu-items">
+                      <button class="close-menu">&times;</button>
+                      <a href="#Account">Account</a>
+                      <a href="#Preferiti">Preferiti</a>
+                      <a href="#Servizi" class="services-toggle">Servizi</a>
+
+
+                      <button class="Lingua" onclick="openPopup()">Seleziona Lingua</button>
+                      <div class="overlay" id="languagePopup">
+                          <div class="popup">
+                              <div class="popup-header">Seleziona la tua lingua</div>
+                              <div class="popup-content">
+                                  <ul>
+                                      <li>Italiano</li>
+                                      <li>English</li>
+                                      <li>Français</li>
+                                      <li>Español</li>
+                                      <li>Deutsch</li>
+                                      <li>Português</li>
+                                      <li>中文</li>
+                                      <li>日本語</li>
+                                      <li>한국어</li>
+                                      <li>Русский</li>
+                                  </ul>
+                              </div>
+                              <div class="popup-footer">
+                                  <button onclick="closePopup()">Chiudi</button>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <a href="#Impostazioni">Impostazioni</a>
+                      <a href="#Informazioni">Info su IHELP</a>
+                      <a href="#Partner">Partner</a>
+                      <a href="#Donazioni">Donazioni</a>
+                      <a href="#Assistenza">Assistenza</a>
+                      <a href="#Contattaci">Contattaci</a>
+                  </div>
+              </div>
+              <input placeholder="Cerca su IHELP" class="input" type="text" >
+              <svg viewBox="0 0 24 24" class="search__icon">
+                <g>
+                  <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                  </path>
+                </g>
+              </svg>
+            </div>
+      </div>
+      <div class="RAPIDO">
+          <input type="checkbox" class="checkbox" />
+          <span class="button-menu"></span>
+              <button class="option-a option">1</button>
+              <button class="option-b option">2</button>
+              <button class="option-c option">3</button>
+      </div>
+  </div>
+
+
+  <script src="button.js" defer></script>
+  <script src="servizi.js" defer></script>
+  <script>
+      function openPopup() {
+          document.getElementById('languagePopup').style.display = 'flex';
+      }
+  
+      function closePopup() {
+          document.getElementById('languagePopup').style.display = 'none';
+      }
+  </script>
+
+<!----------------------------------------------------------------------------------------------------->
+
+
+
+
+<!----------------------------------------------------------------------------------------------------->
+
+    <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Crea la mappa
+    const map = L.map('map').setView([45.6511, 9.594417], 16);
+
+    // Aggiungi il layer di base
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+
+    var minZoomToEdit = 17;
+    var minZoomToView = 14;
+    var markers = [];
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+/*-------------------------------------------------ICONE----------------------------------------------------*/
+
+  /*-----------------------MARKER ROSSO------------------------*/
+
+          var redIcon = L.icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png', // Immagine del marker rosso
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', // Ombra standard
+          iconSize: [25, 41], // Dimensioni del marker
+          iconAnchor: [12, 41], // Punto di ancoraggio
+          popupAnchor: [1, -34], // Posizione del popup
+          shadowSize: [41, 41] // Dimensioni dell'ombra
+          });
+  /*-----------------------------------------------------------*/
+
+
+  /*-----------------------MARKER BLU--------------------------*/
+
+          var blueIcon = L.icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png', // Immagine del marker rosso
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', // Ombra standard
+          iconSize: [25, 41], // Dimensioni del marker
+          iconAnchor: [12, 41], // Punto di ancoraggio
+          popupAnchor: [1, -34], // Posizione del popup
+          shadowSize: [41, 41] // Dimensioni dell'ombra
+          });
+
+  /*-----------------------------------------------------------*/
+
+  /*-----------------------MARKER VERDE------------------------*/
+
+          var greenIcon = L.icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png', // Immagine del marker rosso
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', // Ombra standard
+          iconSize: [25, 41], // Dimensioni del marker
+          iconAnchor: [12, 41], // Punto di ancoraggio
+          popupAnchor: [1, -34], // Posizione del popup
+          shadowSize: [41, 41] // Dimensioni dell'ombra
+          });
+
+  /*-----------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+/*-----------------------------------------MENU' SCELTA MARKER-----------------------------------------------*/
+    
+    const menu = document.createElement('div');
+    menu.className = 'marker-menu';
+    menu.style.display = 'none'; // Nascondi il menu di default
+    document.body.appendChild(menu);
+
+    // Funzione per posizionare il menu contestuale
+    function showMenu(x, y) {
+      menu.style.left = `${x}px`;
+      menu.style.top = `${y}px`;
+      menu.style.display = 'block';
+    }
+
+    // Funzione per nascondere il menu contestuale
+    function hideMenu() {
+      menu.style.display = 'none';
+    }
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+/*--------------------------------------PULSANTI MENU' MARKER------------------------------------------------*/
+
+  /*--------------------PULSANTE ROSSO---------------------------*/
+
+  const redButton = document.createElement('button');
+    redButton.textContent = 'Rosso';
+    redButton.style.backgroundColor = 'red';
+    redButton.style.color = 'white';
+    menu.appendChild(redButton);
+  
+  /*-------------------------------------------------------------*/
+
+  /*--------------------PULSANTE BLU-----------------------------*/
+
+    const blueButton = document.createElement('button');
+    blueButton.textContent = 'Blu';
+    blueButton.style.backgroundColor = 'blue';
+    blueButton.style.color = 'white';
+    menu.appendChild(blueButton);
+
+  /*-------------------------------------------------------------*/
+
+  /*--------------------PULSANTE VERDE---------------------------*/
+
+    const greenButton = document.createElement('button');
+    greenButton.textContent = 'Verde';
+    greenButton.style.backgroundColor = 'green';
+    greenButton.style.color = 'white';
+    menu.appendChild(greenButton);
+
+  /*-------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+/*----------------------------------------------CLICK DESTRO------------------------------------------------------*/
+
+    // Aggiungi l'evento per il clic destro sulla mappa
+    map.on('contextmenu', function (e) {
+        var currentZoom = map.getZoom();
+        
+        if (currentZoom >= minZoomToEdit) {
+          
+          const { x, y } = e.containerPoint; // Coordinate del clic
+          showMenu(x, y); // Mostra il menu contestuale
+          const latlng = e.latlng;
+        // Se il livello di zoom è sufficiente, aggiungi un marker
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        
+
+/*-------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+/*----------------------------------------------EVENTI PULSANTI------------------------------------------------------*/
+
+  /*-----------------------MARKER ROSSO------------------------*/
+
+    redButton.onclick = function () {
+      const now = new Date(); // Ora attuale al momento dell'inserimento
+      const name = "Edoardo"; // Nome da aggiungere al popup
+      // Crea il marker
+      var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
+      // Funzione per calcolare il tempo trascorso
+      function getElapsedTime(startTime) {
+          const currentTime = new Date();
+          const elapsed = currentTime - startTime; // Differenza in millisecondi
+          const seconds = Math.floor((elapsed / 1000) % 60);
+          const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+          const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+          const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+
+          // Restituisce una stringa leggibile
+          if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+          if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+          if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+          return `${seconds} secondi`;
+      }
+      // Funzione per aggiornare il popup
+      function updatePopup() {
+          const elapsedTime = getElapsedTime(now); // Tempo trascorso
+          const popupContent = `<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+          marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+      }
+      // Aggiungi il popup iniziale
+      marker_r.bindPopup(`<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+      // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+      setInterval(updatePopup, 1000);
+      hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+      markers.push(marker_r);
+    };
+
+  /*-----------------------------------------------------------*/
+
+  /*-----------------------MARKER BLU--------------------------*/
+
+            blueButton.onclick = function () {
+              const now = new Date(); // Ora attuale al momento dell'inserimento
+              const name = "Edoardo"; // Nome da aggiungere al popup
+              // Crea il marker
+              var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
+              // Funzione per calcolare il tempo trascorso
+              function getElapsedTime(startTime) {
+                  const currentTime = new Date();
+                  const elapsed = currentTime - startTime; // Differenza in millisecondi
+                  const seconds = Math.floor((elapsed / 1000) % 60);
+                  const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                  const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+                  const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+
+                  // Restituisce una stringa leggibile
+                  if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+                  if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+                  if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+                  return `${seconds} secondi`;
+              }
+              // Funzione per aggiornare il popup
+              function updatePopup() {
+                  const elapsedTime = getElapsedTime(now); // Tempo trascorso
+                  const popupContent = `<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+                  marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+              }
+              // Aggiungi il popup iniziale
+              marker_r.bindPopup(`<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+              // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+              setInterval(updatePopup, 1000);
+              hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+              markers.push(marker_r);
+            };
+
+  /*-----------------------------------------------------------*/
+
+  /*-----------------------MARKER VERDE------------------------*/
+
+            greenButton.onclick = function () {
+              const now = new Date(); // Ora attuale al momento dell'inserimento
+              const name = "Edoardo"; // Nome da aggiungere al popup
+              // Crea il marker
+              var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
+              // Funzione per calcolare il tempo trascorso
+              function getElapsedTime(startTime) {
+                  const currentTime = new Date();
+                  const elapsed = currentTime - startTime; // Differenza in millisecondi
+                  const seconds = Math.floor((elapsed / 1000) % 60);
+                  const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                  const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+                  const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+
+                  // Restituisce una stringa leggibile
+                  if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+                  if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+                  if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+                  return `${seconds} secondi`;
+              }
+              // Funzione per aggiornare il popup
+              function updatePopup() {
+                  const elapsedTime = getElapsedTime(now); // Tempo trascorso
+                  const popupContent = `<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+                  marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+              }
+              // Aggiungi il popup iniziale
+              marker_r.bindPopup(`<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+              // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+              setInterval(updatePopup, 1000);
+              hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+              markers.push(marker_r);
+            };
+  
+  /*-----------------------------------------------------------*/
+
+
+                } else {
+                }
+            });
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+/*-----------------------------------------COMPORTAMENTO MARKER----------------------------------------------*/
+
+  /*--------------------ZOOM MAPPA-----------------------------*/
+
+    map.on('zoomend', function () {
+      var currentZoom = map.getZoom();
+
+  /*-----------------------------------------------------------*/
+
+
+  /*--------------------MARKER OFF-----------------------------*/
+
+      if (currentZoom < minZoomToView ) {
+        markers.forEach(function(marker) {
+          marker.setOpacity(0); // Nascondi il marker
+        });
+      } 
+      
+  /*-----------------------------------------------------------*/
+
+  /*--------------------MARKER ON------------------------------*/
+
+      else {
+        // Se il livello di zoom è sufficiente, mostra i marker
+        markers.forEach(function(marker) {
+          marker.setOpacity(1); // Mostra il marker
+        });
+      }
+    });
+
+  /*-----------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+/*----------------------------------------------NASCONDI------------------------------------------------------*/
+
+        map.on('click', hideMenu);
+        document.body.addEventListener('click', function (e) {
+        if (!menu.contains(e.target)) {
+            hideMenu();
+        }
+    });
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+  </script>
+</body>
+
+<!----------------------------------------------FINE BODY----------------------------------------------------->
+
+</html>
