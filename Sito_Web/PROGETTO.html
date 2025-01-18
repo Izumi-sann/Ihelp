@@ -173,6 +173,7 @@ function HideMarkers(marker_type) {
     markers.forEach(
       function(marker) {
         if (marker.type == marker_type) {
+          marker.visible = false;
           marker.setOpacity(0);
           marker.closePopup();
         }
@@ -180,13 +181,18 @@ function HideMarkers(marker_type) {
     hideMenu();
 }
 
-function ShowMarkers(marker_type){
-  markers.forEach(
+function ShowMarkers(marker_type){//mostra i marker
+    markers.forEach( //scorre la lista
       function(marker) {
-        if (marker.type == marker_type) {
-            marker.setOpacity(100);
-        }
-    });
+          if (marker.type == marker_type) //se il marker corrisponde al tipo richiesto dal pulsante
+            if (map.getZoom() >= minZoomToView) { //verifica se mostrare o meno il marker a seconda dello zoom
+              marker.visible = true; //imposta il marker come visibile
+              marker.setOpacity(1);//mostra il marker
+            }
+            else
+              marker.visible = true;  //semplicemente imposta il marker come visibile ma non lo mostra a causa dello zoom
+      }
+    );
 }
 
 
@@ -336,6 +342,7 @@ function ShowMarkers(marker_type){
       // Crea il marker
       var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
       marker_r.type = "red";
+      marker_r.visible = true;
       // Funzione per calcolare il tempo trascorso
       function getElapsedTime(startTime) {
           const currentTime = new Date();
@@ -375,6 +382,7 @@ function ShowMarkers(marker_type){
               // Crea il marker
               var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
               marker_r.type = "blue"; //assegna tipo
+              marker_r.visible = true;
               // Funzione per calcolare il tempo trascorso
               function getElapsedTime(startTime) {
                   const currentTime = new Date();
@@ -414,6 +422,7 @@ function ShowMarkers(marker_type){
               // Crea il marker
               var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
               marker_r.type = "green"; //assegna tipo
+              marker_r.visible = true;
               // Funzione per calcolare il tempo trascorso
               function getElapsedTime(startTime) {
                   const currentTime = new Date();
@@ -482,7 +491,8 @@ function ShowMarkers(marker_type){
       else {
         // Se il livello di zoom è sufficiente, mostra i marker
         markers.forEach(function(marker) {
-          marker.setOpacity(1); // Mostra il marker
+          if (marker.visible)
+            marker.setOpacity(1); // Mostra il marker
         });
       }
 
