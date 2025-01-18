@@ -110,9 +110,17 @@
       </div>
   </div>
 
+  <div id="map"></div>
+  
+
+<!-------------------------------------------INIZIO SCRIPTING------------------------------------------>
 
   <script src="button.js" defer></script>
   <script src="servizi.js" defer></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+  <!----------------------------------SCRIPT APERTURA/CHIUSURA POPUP----------------------------------->
   <script>
       function openPopup() {
           document.getElementById('languagePopup').style.display = 'flex';
@@ -122,17 +130,10 @@
           document.getElementById('languagePopup').style.display = 'none';
       }
   </script>
+  <!--------------------------------------------------------------------------------------------------->
 
-<!----------------------------------------------------------------------------------------------------->
 
-
-<!----------------------------------------------------------------------------------------------------->
-
-  <div id="map"></div>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    /*--------------------------------------------INIZIO SCRIPT---------------------------------------------*/
 
     // Crea la mappa
     const map = L.map('map').setView([45.6511, 9.594417], 16);
@@ -150,9 +151,8 @@
 /*-----------------------------------------------------------------------------------------------------------*/
 
 
+/*--------------------------------------------CHECKBOX PULSANTI PREFERITI------------------------------------*/
 
-
-/*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
 const checkboxes = document.querySelectorAll('.checkbox_option');
  
 checkboxes.forEach(checkbox => {
@@ -196,13 +196,12 @@ function ShowMarkers(marker_type){//mostra i marker
 }
 
 
-
 /*-----------------------------------------------------------------------------------------------------------*/
 
 
 
 
-/*-------------------------------------------------ICONE----------------------------------------------------*/
+/*-------------------------------------------------ICONE MARKER---------------------------------------------*/
 
   /*-----------------------MARKER ROSSO------------------------*/
 
@@ -273,7 +272,7 @@ function ShowMarkers(marker_type){//mostra i marker
 
 
 
-/*--------------------------------------PULSANTI MENU' MARKER------------------------------------------------*/
+/*--------------------------------------PULSANTI MENU' SCELTA MARKER-----------------------------------------*/
 
   /*--------------------PULSANTE ROSSO---------------------------*/
 
@@ -312,17 +311,17 @@ function ShowMarkers(marker_type){//mostra i marker
 
 /*----------------------------------------------CLICK DESTRO------------------------------------------------------*/
 
-    // Aggiungi l'evento per il clic destro sulla mappa
-    map.on('contextmenu', function (e) {
-        var currentZoom = map.getZoom();
-        const { x, y } = e.containerPoint; // Coordinate del clic
-        showMenu(x, y); // Mostra il menu contestuale
-        const latlng = e.latlng;
+  // Aggiungi l'evento per il clic destro sulla mappa
+  map.on('contextmenu', function (e) {
+      var currentZoom = map.getZoom();
+      const { x, y } = e.containerPoint; // Coordinate del clic
+      showMenu(x, y); // Mostra il menu contestuale
+      const latlng = e.latlng;
 
-        if (currentZoom >= minZoomToEdit) {
-        // Se il livello di zoom è sufficiente, aggiungi un marker
-        var lat = e.latlng.lat;
-        var lng = e.latlng.lng;
+      if (currentZoom >= minZoomToEdit) {
+          // Se il livello di zoom è sufficiente, aggiungi un marker
+          var lat = e.latlng.lat;
+          var lng = e.latlng.lng;
 
         
 
@@ -336,127 +335,127 @@ function ShowMarkers(marker_type){//mostra i marker
 
   /*-----------------------MARKER ROSSO------------------------*/
 
-    redButton.onclick = function () {
-      const now = new Date(); // Ora attuale al momento dell'inserimento
-      const name = "Edoardo"; // Nome da aggiungere al popup
-      // Crea il marker
-      var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
-      marker_r.type = "red";
-      marker_r.visible = true;
-      // Funzione per calcolare il tempo trascorso
-      function getElapsedTime(startTime) {
-          const currentTime = new Date();
-          const elapsed = currentTime - startTime; // Differenza in millisecondi
-          const seconds = Math.floor((elapsed / 1000) % 60);
-          const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
-          const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
-          const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+          redButton.onclick = function () {
+            const now = new Date(); // Ora attuale al momento dell'inserimento
+            const name = "Edoardo"; // Nome da aggiungere al popup
+            // Crea il marker
+            var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
+            marker_r.type = "red";
+            marker_r.visible = true;
+            // Funzione per calcolare il tempo trascorso
+            function getElapsedTime(startTime) {
+                const currentTime = new Date();
+                const elapsed = currentTime - startTime; // Differenza in millisecondi
+                const seconds = Math.floor((elapsed / 1000) % 60);
+                const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+                const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
 
-          // Restituisce una stringa leggibile
-          if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
-          if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
-          if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
-          return `${seconds} secondi`;
-      }
-      // Funzione per aggiornare il popup
-      function updatePopup() {
-          const elapsedTime = getElapsedTime(now); // Tempo trascorso
-          const popupContent = `<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
-          marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
-      }
-      // Aggiungi il popup iniziale
-      marker_r.bindPopup(`<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
-      // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
-      setInterval(updatePopup, 1000);
-      hideMenu(); // Nascondi il menu dopo aver posizionato il marker
-      markers.push(marker_r);
-    };
+                // Restituisce una stringa leggibile
+                if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+                if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+                if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+                return `${seconds} secondi`;
+            }
+            // Funzione per aggiornare il popup
+            function updatePopup() {
+                const elapsedTime = getElapsedTime(now); // Tempo trascorso
+                const popupContent = `<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+                marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+            }
+            // Aggiungi il popup iniziale
+            marker_r.bindPopup(`<b>PARCHEGGIO OCCUAPTO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+            // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+            setInterval(updatePopup, 1000);
+            hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+            markers.push(marker_r);
+          };
 
   /*-----------------------------------------------------------*/
 
   /*-----------------------MARKER BLU--------------------------*/
 
-            blueButton.onclick = function () {
-              const now = new Date(); // Ora attuale al momento dell'inserimento
-              const name = "Edoardo"; // Nome da aggiungere al popup
-              // Crea il marker
-              var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
-              marker_r.type = "blue"; //assegna tipo
-              marker_r.visible = true;
-              // Funzione per calcolare il tempo trascorso
-              function getElapsedTime(startTime) {
-                  const currentTime = new Date();
-                  const elapsed = currentTime - startTime; // Differenza in millisecondi
-                  const seconds = Math.floor((elapsed / 1000) % 60);
-                  const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
-                  const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
-                  const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+          blueButton.onclick = function () {
+            const now = new Date(); // Ora attuale al momento dell'inserimento
+            const name = "Edoardo"; // Nome da aggiungere al popup
+            // Crea il marker
+            var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
+            marker_r.type = "blue"; //assegna tipo
+            marker_r.visible = true;
+            // Funzione per calcolare il tempo trascorso
+            function getElapsedTime(startTime) {
+                const currentTime = new Date();
+                const elapsed = currentTime - startTime; // Differenza in millisecondi
+                const seconds = Math.floor((elapsed / 1000) % 60);
+                const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+                const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
 
-                  // Restituisce una stringa leggibile
-                  if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
-                  if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
-                  if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
-                  return `${seconds} secondi`;
-              }
-              // Funzione per aggiornare il popup
-              function updatePopup() {
-                  const elapsedTime = getElapsedTime(now); // Tempo trascorso
-                  const popupContent = `<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
-                  marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
-              }
-              // Aggiungi il popup iniziale
-              marker_r.bindPopup(`<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
-              // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
-              setInterval(updatePopup, 1000);
-              hideMenu(); // Nascondi il menu dopo aver posizionato il marker
-              markers.push(marker_r);
-            };
+                // Restituisce una stringa leggibile
+                if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+                if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+                if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+                return `${seconds} secondi`;
+            }
+            // Funzione per aggiornare il popup
+            function updatePopup() {
+                const elapsedTime = getElapsedTime(now); // Tempo trascorso
+                const popupContent = `<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+                marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+            }
+            // Aggiungi il popup iniziale
+            marker_r.bindPopup(`<b>PARCHEGGIO LIBERO</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+            // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+            setInterval(updatePopup, 1000);
+            hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+            markers.push(marker_r);
+          };
 
   /*-----------------------------------------------------------*/
 
   /*-----------------------MARKER VERDE------------------------*/
 
-            greenButton.onclick = function () {
-              const now = new Date(); // Ora attuale al momento dell'inserimento
-              const name = "Edoardo"; // Nome da aggiungere al popup
-              // Crea il marker
-              var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
-              marker_r.type = "green"; //assegna tipo
-              marker_r.visible = true;
-              // Funzione per calcolare il tempo trascorso
-              function getElapsedTime(startTime) {
-                  const currentTime = new Date();
-                  const elapsed = currentTime - startTime; // Differenza in millisecondi
-                  const seconds = Math.floor((elapsed / 1000) % 60);
-                  const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
-                  const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
-                  const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+          greenButton.onclick = function () {
+            const now = new Date(); // Ora attuale al momento dell'inserimento
+            const name = "Edoardo"; // Nome da aggiungere al popup
+            // Crea il marker
+            var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
+            marker_r.type = "green"; //assegna tipo
+            marker_r.visible = true;
+            // Funzione per calcolare il tempo trascorso
+            function getElapsedTime(startTime) {
+                const currentTime = new Date();
+                const elapsed = currentTime - startTime; // Differenza in millisecondi
+                const seconds = Math.floor((elapsed / 1000) % 60);
+                const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+                const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
 
-                  // Restituisce una stringa leggibile
-                  if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
-                  if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
-                  if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
-                  return `${seconds} secondi`;
-              }
-              // Funzione per aggiornare il popup
-              function updatePopup() {
-                  const elapsedTime = getElapsedTime(now); // Tempo trascorso
-                  const popupContent = `<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
-                  marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
-              }
-              // Aggiungi il popup iniziale
-              marker_r.bindPopup(`<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
-              // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
-              setInterval(updatePopup, 1000);
-              hideMenu(); // Nascondi il menu dopo aver posizionato il marker
-              markers.push(marker_r);
-            };
+                // Restituisce una stringa leggibile
+                if (days > 0) return `${days} giorni, ${hours} ore, ${minutes} minuti`;
+                if (hours > 0) return `${hours} ore, ${minutes} minuti, ${seconds} secondi`;
+                if (minutes > 0) return `${minutes} minuti, ${seconds} secondi`;
+                return `${seconds} secondi`;
+            }
+            // Funzione per aggiornare il popup
+            function updatePopup() {
+                const elapsedTime = getElapsedTime(now); // Tempo trascorso
+                const popupContent = `<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: ${elapsedTime}`;
+                marker_r.getPopup().setContent(popupContent); // Aggiorna il contenuto del popup
+            }
+            // Aggiungi il popup iniziale
+            marker_r.bindPopup(`<b>ASCENSORE</b> <br> User: ${name} <br> Tempo trascorso: 0 secondi`).openPopup();
+            // Aggiorna il popup ogni secondo per mostrare il tempo trascorso
+            setInterval(updatePopup, 1000);
+            hideMenu(); // Nascondi il menu dopo aver posizionato il marker
+            markers.push(marker_r);
+          };
   
   /*-----------------------------------------------------------*/
 
-                } else 
-                  hideMenu();
-            });
+      } else  //se non si è raggiunto il livello di zoom necessario
+        hideMenu();
+    });
 
 /*-----------------------------------------------------------------------------------------------------------*/
 
@@ -504,14 +503,15 @@ function ShowMarkers(marker_type){//mostra i marker
 
 
 
-/*----------------------------------------------NASCONDI------------------------------------------------------*/
+/*----------------------------------------------NASCONDI MENU-------------------------------------------------*/
 
-        map.on('click', hideMenu);
-        document.body.addEventListener('click', function (e) {
-        if (!menu.contains(e.target)) {
-            hideMenu();
-        }
-    });
+  map.on('click', hideMenu);
+
+  document.body.addEventListener('click', function (e) {
+  if (!menu.contains(e.target)) {
+      hideMenu();
+  }
+  });
 
 /*-----------------------------------------------------------------------------------------------------------*/
 
