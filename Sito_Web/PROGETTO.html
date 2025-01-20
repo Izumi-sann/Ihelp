@@ -78,8 +78,6 @@
                               </div>
                           </div>
                       </div>
-
-
                       <a href="#Impostazioni">Impostazioni</a>
                       <a href="#Informazioni">Info su IHELP</a>
                       <a href="#Partner">Partner</a>
@@ -120,7 +118,8 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 
-  <!----------------------------------SCRIPT APERTURA/CHIUSURA POPUP----------------------------------->
+<!----------------------------------SCRIPT APERTURA/CHIUSURA POPUP----------------------------------->
+  
   <script>
       function openPopup() {
           document.getElementById('languagePopup').style.display = 'flex';
@@ -130,9 +129,13 @@
           document.getElementById('languagePopup').style.display = 'none';
       }
   </script>
-  <!--------------------------------------------------------------------------------------------------->
+  
+<!--------------------------------------------------------------------------------------------------->
 
 
+
+
+<!----------------------------------------CREA MAPPA------------------------------------------------->
   <script>
 
     // Crea la mappa
@@ -159,6 +162,8 @@ checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', handleCheckboxCheck);
 });
 
+/*-----------------------CHECK_CHECK------------------------*/
+
 function handleCheckboxCheck(event) {
     const checkbox = event.target;
     const type = checkbox.id == 'chbox_a' ? 'red' : checkbox.id == 'chbox_b' ? 'blue' : 'green';
@@ -169,6 +174,10 @@ function handleCheckboxCheck(event) {
         ShowMarkers(type);
 }
 
+/*-----------------------------------------------------------*/
+
+/*-----------------------HIDE_MARKER-------------------------*/
+    
 function HideMarkers(marker_type) {
     markers.forEach(
       function(marker) {
@@ -181,6 +190,10 @@ function HideMarkers(marker_type) {
     hideMenu();
 }
 
+/*-----------------------------------------------------------*/
+
+/*-----------------------SHOW_MARKER-------------------------*/
+    
 function ShowMarkers(marker_type){//mostra i marker
     markers.forEach( //scorre la lista
       function(marker) {
@@ -195,7 +208,8 @@ function ShowMarkers(marker_type){//mostra i marker
     );
 }
 
-
+/*-----------------------------------------------------------*/
+    
 /*-----------------------------------------------------------------------------------------------------------*/
 
 
