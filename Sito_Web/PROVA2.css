@@ -55,13 +55,15 @@
     color: #1e1e1e;
     font-size: 30px;
     font-weight: 700;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-left: 7px;
+    margin-top: 7px;
   }
   
   .checkbox {
@@ -71,6 +73,8 @@
     opacity: 0;
     z-index: 3;
     cursor: pointer;
+    margin-left: 12px;
+    margin-top: 12px;
   }
 
   .checkbox_option{
@@ -111,10 +115,6 @@
     padding-bottom: 5px;
   }
   
-  #chbox_a:checked{
-    
-  }
-
   .checkbox:checked ~ .button-menu::after {
     content: "★";
     scale: 0.98;
@@ -132,52 +132,76 @@
     box-shadow: none;
     scale: 0.98;
   }
-  
-  .checkbox:checked ~ .option-a{
-    transition-delay: 0.1s;
-    transform: translateY(70px);
-  }
-  
-  .checkbox:checked ~ .option-b{
-    transition-delay: 0.2s;
-    transform: translateY(140px);
-  }
-  
-  .checkbox:checked ~ .option-c{
-    transition-delay: 0.3s;
-    transform: translateY(210px);
-  }
 
-/*---------------------------------------------------------------------------------------------------------*/
-
-  .checkbox:checked ~ .ch-option-a{
-    transition-delay: 0.1s;
-    transform: translateY(70px);
-  }
-  
-  .checkbox:checked ~ .ch-option-b{
-    transition-delay: 0.2s;
-    transform: translateY(140px);
-  }
-  
-  .checkbox:checked ~ .ch-option-c{
-    transition-delay: 0.3s;
-    transform: translateY(210px);
-  }
-  
-
-
-
-
-
-
-
-
-  .RAPIDO{
+  /* Pulsanti fuori dal popup preferiti */
+  .color-button-pref {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
     margin: 10px;
-  }
+}
+
+.color-button-pref:hover {
+    background-color: #0056b3;
+}
+
+
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Stile per i pulsanti O, X, T */
+.color-button-pref {
+  cursor: pointer;
+  position: absolute;
+  z-index: 0;
+  background-color: rgb(214, 229, 247);
+  box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.5);
+  color: #1e1e1e;
+  font-size: 30px;
+  font-weight: 700;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+/* Effetto hover */
+.color-button-pref:hover,
+.color-button-pref:active {
+  scale: 0.98;
+  box-shadow: none;
+}
+
+/* Animazione per i pulsanti */
+.checkbox:checked ~ .ch-option-a {
+  transition-delay: 0.1s;
+  transform: translateY(75px);
+}
+
+.checkbox:checked ~ .ch-option-b {
+  transition-delay: 0.2s;
+  transform: translateY(145px);
+}
+
+.checkbox:checked ~ .ch-option-c {
+  transition-delay: 0.3s;
+  transform: translateY(215px);
+}
   
-  
+
+  /*---------------------------------------------------------------------------------------------------------*/
+
+
   
   /*-------------------------------------------TASO MENU' PRINCIPALE-------------------------------------------*/
   .MENU {
@@ -420,3 +444,190 @@ z-index: -1;
   width: 100%;
   cursor: pointer;
 }
+
+/* -----------------------------------POPUP SERVIZI DISPONIBILI--------------------------------------------- */
+
+.overlay-disp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenitore del popup */
+.popup-disp {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Griglia delle immagini */
+.services-grid-disp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.service-item-disp {
+  text-align: center;
+  width: 100px;
+}
+
+/* Immagini dei servizi */
+.service-item-disp img {
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.service-item-disp img:hover {
+  transform: scale(1.1);
+}
+
+/* Pulsante Chiudi */
+.popup-footer-disp {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.popup-footer-disp button {
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup-footer-disp button:hover {
+  background: #0056b3;
+}
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+/* -----------------------------------POPUP SERVIZI PREFERITI--------------------------------------------- */
+
+.overlay-disp-pref {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenitore del popup preferiti */
+.popup-disp-pref {
+  background: white;
+  padding: 40px;
+  padding-bottom: 50px;
+  border-radius: 0px 10px 10px 10px;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Griglia delle immagini preferiti */
+.services-grid-disp-pref {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Singolo elemento servizio preferiti */
+.service-item-disp-pref {
+  text-align: center;
+  width: 100px;
+}
+
+/* Immagini dei servizi preferiti */
+.service-item-disp-pref img {
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.service-item-disp-pref img:hover {
+  transform: scale(1.1);
+}
+
+/* Barra delle tab sopra il popup preferiti */
+.popup-header-disp-pref {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px; /* Distanza ridotta tra le tab */
+  position: absolute;
+  top: -30px; /* Posizionamento sopra il popup */
+  left: 0px;
+  z-index: 1010;
+}
+
+.popup-header-disp-pref button {
+  padding: 5px 40px;
+  border: 1px solid #565656;
+  background: #7f7f80; /* Grigio chiaro per tab non attiva */
+  color: #000000; /* Grigio scuro per il testo delle tab non attive */
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0; /* Bordo arrotondato */
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+/* Tab attiva preferiti (evidenziata) */
+.popup-header-disp-pref button.active {
+  background: #fff; /* Bianco per la tab attiva */
+  border: 1px solid #ffffff;
+  color: #1a73e8; /* Colore blu per la tab attiva */
+  font-weight: 600;
+}
+
+/* Hover per tab non attiva preferiti */
+.popup-header-disp-pref button:hover:not(.active) {
+  background: #e8f0fe; /* Colore di hover per le tab non attive */
+}
+
+/* Pulsante Chiudi in basso a destra preferiti */
+.popup-footer-disp-pref {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.popup-footer-disp-pref button {
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup-footer-disp-pref button:hover {
+  background: #0056b3;
+}
+
