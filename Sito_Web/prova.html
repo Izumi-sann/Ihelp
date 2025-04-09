@@ -138,7 +138,7 @@
             let previousColor = selectedColors[button];
             if (previousColor && previousColor !== color) {
                 markers_pref[previousColor].addTo(map);
-                hiddenMarkers_pref[button] = null;
+                shownMarkers_pref[button] = null;
             }
 
             for (let key in selectedColors) {
@@ -269,12 +269,13 @@
             </div>
         </div>
         <div class="button-container">
-            <input type="checkbox" id="menu-toggle" class="checkbox">
+            <input type="checkbox" id="menu-toggle" class="checkbox"> 
             <label for="menu-toggle" class="button-menu"></label>
         
             <button id="btnOOut" class="color-button-pref ch-option-a" onclick="toggleMarker('O')">O</button>
             <button id="btnXOut" class="color-button-pref ch-option-b" onclick="toggleMarker('X')">X</button>
             <button id="btnTOut" class="color-button-pref ch-option-c" onclick="toggleMarker('T')">T</button>
+            
         </div>
 
   </div>
@@ -368,9 +369,9 @@
 
 
 
-        let selectedColors = { O: null, X: null, T: null };
-        let hiddenMarkers_pref = { O: null, X: null, T: null };
-        let activeButton = 'O';
+    let selectedColors = { O: null, X: null, T: null };
+    let shownMarkers_pref = { O: null, X: null, T: null };
+    let activeButton = 'O';
 
 
     var minZoomToEdit = 17;
@@ -381,161 +382,8 @@
 
 
 
-/*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
-
-            // Funzione per selezionare un colore nel popup e assegnarlo al pulsante attivo
-            function selectColor(color) {
-                // Controlliamo se il colore è già stato assegnato a un altro pulsante
-                Object.keys(selectedColors).forEach(buttonId => {
-                    if (selectedColors[buttonId] === color) {
-                        selectedColors[buttonId] = null; // Rimuoviamo il colore dal pulsante precedente
-                        updateButtonColor(buttonId); // Aggiorniamo la visualizzazione
-                    }
-                });
-
-                // Assegniamo il colore al pulsante attualmente selezionato
-                selectedColors[activeButton] = color;
-                updateButtonColor(activeButton); // Aggiorniamo il colore del pulsante selezionato
-            }
-
-            // Funzione per aggiornare il colore visivo di un singolo pulsante
-            function updateButtonColor(buttonId) {
-                let button = document.getElementById('btn' + buttonId + 'Out');
-                if (selectedColors[buttonId]) {
-                    button.style.backgroundColor = selectedColors[buttonId]; // Imposta il colore selezionato
-                } else {
-                    button.style.backgroundColor = '#007bff'; // Ripristina il colore predefinito se il pulsante non ha un colore assegnato
-                }
-            }
-
-            // Funzione per aggiornare tutti i pulsanti in base ai colori assegnati
-            function updateButtonColors() {
-                Object.keys(selectedColors).forEach(buttonId => {
-                    updateButtonColor(buttonId);
-                });
-            }
-
-            // Listener per i pulsanti (O, X, T)
-            document.querySelectorAll('.color-button-pref').forEach(button => {
-                button.addEventListener('click', () => {
-                    activeButton = button.id.replace('btn', '').replace('Out', ''); // Salviamo quale pulsante è attivo
-                });
-            });
-
-            // Funzione di gestione della visibilità dei marker (modificata per combinarsi con la funzione toggleMarker)
-            function toggleMarker(button) {
-                let color = selectedColors[button]; // Ottieni il colore associato al pulsante
-
-                if (color) {
-                    // Se il marker è già nascosto, lo mostriamo
-                    if (hiddenMarkers_pref[button] === color) {
-                        ShowMarkers(color); // Mostra il marker
-                        hiddenMarkers_pref[button] = null; // Rimuoviamo il marker nascosto
-                    } else {
-                        // Se il marker è visibile, lo nascondiamo
-                        HideMarkers(color); // Nascondi il marker
-                        hiddenMarkers_pref[button] = color; // Imposta il marker come nascosto
-                    }
-                }
-            }
-
-            // Funzione per nascondere i marker
-            function HideMarkers(marker_type) {
-                markers.forEach(function(marker) {
-                    if (marker.type == marker_type) {
-                        marker.setOpacity(0); // Nascondi il marker
-                        marker.closePopup(); // Chiudi il popup se il marker è nascosto
-                    }
-                });
-                hideMenu(); // Nascondi il menu (se presente)
-            }
-
-            // Funzione per mostrare i marker
-            function ShowMarkers(marker_type) {
-                markers.forEach(function(marker) {
-                    if (marker.type == marker_type) {
-                        marker.setOpacity(100); // Mostra il marker
-                    }
-                });
-            }
-
-            // Funzione per selezionare un colore nel popup e assegnarlo al pulsante attivo
-            function selectColor(color) {
-                let previousColor = selectedColors[activeButton]; // Colore precedentemente assegnato al pulsante attivo
-
-                // Se il colore cambia, rendiamo visibili i marker del vecchio colore
-                if (previousColor && previousColor !== color) {
-                    ShowMarkers(previousColor);
-                }
-
-                // Controlliamo se il colore è già stato assegnato a un altro pulsante e lo rimuoviamo
-                Object.keys(selectedColors).forEach(buttonId => {
-                    if (selectedColors[buttonId] === color) {
-                        selectedColors[buttonId] = null; // Rimuoviamo il colore dal pulsante precedente
-                        updateButtonColor(buttonId);
-                    }
-                });
-
-                // Assegniamo il nuovo colore al pulsante attivo
-                selectedColors[activeButton] = color;
-                updateButtonColor(activeButton);
-
-                // Se il nuovo colore era stato nascosto, rendilo visibile
-                ShowMarkers(color);
-            }
-
-            // Funzione per aggiornare il colore visivo di un singolo pulsante
-            function updateButtonColor(buttonId) {
-                let button = document.getElementById('btn' + buttonId + 'Out');
-                if (selectedColors[buttonId]) {
-                    button.style.backgroundColor = selectedColors[buttonId]; // Imposta il colore selezionato
-                } else {
-                    button.style.backgroundColor = '#007bff'; // Ripristina il colore predefinito
-                }
-            }
-
-            // Funzione per aggiornare tutti i pulsanti in base ai colori assegnati
-            function updateButtonColors() {
-                Object.keys(selectedColors).forEach(buttonId => {
-                    updateButtonColor(buttonId);
-                });
-            }
-
-            // Funzione per nascondere i marker di un determinato colore
-            function HideMarkers(marker_type) {
-                markers.forEach(marker => {
-                    if (marker.type == marker_type) {
-                        marker.setOpacity(0); // Nasconde il marker
-                        marker.closePopup();
-                    }
-                });
-            }
-
-            // Funzione per mostrare i marker di un determinato colore
-            function ShowMarkers(marker_type) {
-                markers.forEach(marker => {
-                    if (marker.type == marker_type) {
-                        marker.setOpacity(1); // Mostra il marker
-                    }
-                });
-            }
-
-            // Listener per i pulsanti (O, X, T)
-            document.querySelectorAll('.color-button-pref').forEach(button => {
-                button.addEventListener('click', () => {
-                    activeButton = button.id.replace('btn', '').replace('Out', ''); // Salviamo quale pulsante è attivo
-                });
-            });
-
-
-
-
-
-
-
-
-/*-----------------------------------------------------------------------------------------------------------*/
-
+//modificate un po' quasi tutte le funzioni qui (8-04-25), da copiare su facchinetti (9-04-25)
+d
 
 
 
@@ -707,9 +555,6 @@
         console.log("LONGITUDINE:", lng);
         
         
-
-        
-
 /*-------------------------------------------------------------------------------------------------------------*/
 
 
@@ -717,10 +562,6 @@
 
 
 /*----------------------------------------------EVENTI PULSANTI------------------------------------------------------*/
-
-
-
-
 
 
 /*-----------------------MARKER ROSSO------------------------*/
@@ -802,13 +643,7 @@
         };
 
     
-
   /*-----------------------------------------------------------*/
-
-
-
-
-
 
   /*-----------------------MARKER BLU--------------------------*/
 
@@ -889,11 +724,6 @@
     };
 
   /*-----------------------------------------------------------*/
-
-
-
-
-
 
   /*-----------------------MARKER VERDE------------------------*/
 
@@ -1134,8 +964,6 @@
         };        
 
     /*-----------------------------------------------------------*/
-
-
 
 
 /*-----------------UPDATE LINGUA MARKER-------------------------------*/
