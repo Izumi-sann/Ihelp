@@ -135,24 +135,23 @@
             });
         }
 
-        function selectColor(color) {
-            let button = activeButton;
-            let previousColor = selectedColors[button];
-            if (previousColor && previousColor !== color) {
-                markers_pref[previousColor].addTo(map);
-                shownMarkers_pref[button] = null;
-            }
-
-            for (let key in selectedColors) {
-                if (selectedColors[key] === color) {
-                    markers_pref[color].addTo(map);
-                    selectedColors[key] = null;
-                    document.getElementById('btn' + key).style.background = null;
-                }
-            }
-            selectedColors[button] = color;
-            updateButtonsColors();
+    function selectColor(color) {
+        let button = activeButton;
+        let previousColor = selectedColors[button];
+        if (previousColor && previousColor !== color) {
+            markers_pref[previousColor].addTo(map);
+            shownMarkers_pref[button] = null;
         }
+        for (let key in selectedColors) {
+            if (selectedColors[key] === color) {
+                markers_pref[color].addTo(map);
+                selectedColors[key] = null;
+                document.getElementById('btn' + key).style.background = null;
+            }
+    }
+    selectedColors[button] = color;
+    updateButtonsColors();
+}
 
         function updateButtonsColors() {
             let allButtons = ['O', 'X', 'T'];
@@ -270,14 +269,21 @@
             </div>
         </div>
         <div class="button-container">
-            <input type="checkbox" id="menu-toggle" class="checkbox"> 
+            <input type="checkbox" id="menu-toggle" class="checkbox">
             <label for="menu-toggle" class="button-menu"></label>
         
             <button id="btnOOut" class="color-button-pref ch-option-a" onclick="toggleMarker('O')">O</button>
             <button id="btnXOut" class="color-button-pref ch-option-b" onclick="toggleMarker('X')">X</button>
             <button id="btnTOut" class="color-button-pref ch-option-c" onclick="toggleMarker('T')">T</button>
-            
         </div>
+
+        <!--
+        <div style="padding: 39px; background-color: black; color: white;">
+            {% for i in dati_risposta %}
+            <h1>{{ i['latitudine'] }},{{ i['longitudine'] }},{{ i['data'] }},{{ i['colore'] }},{{ i['descrizione'] }}</h1><br>
+            {% endfor %}
+        </div>
+        -->
 
   </div>
 
@@ -289,7 +295,6 @@
   <script src="{{ url_for('static', filename='script/' + 'translations.js') }}" defer></script>
   
   <script>
-
 
     /*-------------------------MENU' SERVIZI-----------------------------*/
 
@@ -370,9 +375,9 @@
 
 
 
-    let selectedColors = { O: null, X: null, T: null };
-    let shownMarkers_pref = { O: null, X: null, T: null };
-    let activeButton = 'O';
+        let selectedColors = { O: null, X: null, T: null };
+        let shownMarkers_pref = { O: null, X: null, T: null };
+        let activeButton = 'O';
 
 
     var minZoomToEdit = 17;
@@ -383,10 +388,120 @@
 
 
 
-//modificate un po' quasi tutte le funzioni qui (8-04-25), da copiare su facchinetti (9-04-25)
+/*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
+
+            // Funzione per selezionare un colore nel popup e assegnarlo al pulsante attivo
+            function selectColor(color) {
+                let previousColor = selectedColors[activeButton]; // Colore precedentemente assegnato al pulsante attivo
 
 
+                // Controlliamo se il colore è già stato assegnato a un altro pulsante e lo rimuoviamo
+                Object.keys(selectedColors).forEach(buttonId => {
+                    if (selectedColors[buttonId] === color) {
+                        selectedColors[buttonId] = null; // Rimuoviamo il colore dal pulsante precedente
+                        updateButtonColor(buttonId);
+                    }
+                });
 
+
+                // Assegniamo il nuovo colore al pulsante attivo
+                selectedColors[activeButton] = color;
+                updateButtonColor(activeButton);
+
+                // Se il colore cambia, rendiamo invisibili i marker del vecchio colore
+                if (previousColor && previousColor !== color) {
+                    /*nascondo i marker del colore precedente; considerando la funzione,
+                    assegno direttamente il nuovo colore associato al pulsante come colore da mostrare (lo inserisco in shownMarkers_pref)
+                    in questo modo nel controllo eseguito in toggleMarker() il colore associato al
+                    bottone verrà settato a null(fare riferimento alla funzione per il funzionamento), di fatto nascondendo il vecchio colore
+                    e non mantiene nascosto quello nuovo. In poche parole si disattiva la funzione di mostrare il vecchio colore preferito,
+                    lasciando il resto invariato. se non ci sono altri colori preferiti da mostrare allora tutti ci marker verranno mostrati,
+                    altrimenti solo quelli preferiti che già venivano mostrati con priorità, escluso quello appena cambiato.*/
+                    shownMarkers_pref[activeButton] = color;//il marker del colore precedente non sono più da mostrare con priorità
+                    toggleMarker(activeButton);//nasconde eventualmente il vecchio colore se ci sono altri colori preferiti da mostrare, altrimenti mostra tutto.
+                }
+            }
+
+            // Funzione per aggiornare il colore visivo di un singolo pulsante
+            function updateButtonColor(buttonId) {
+                let button = document.getElementById('btn' + buttonId + 'Out');
+                if (selectedColors[buttonId]) {
+                    button.style.backgroundColor = selectedColors[buttonId]; // Imposta il colore selezionato
+                } else {
+                    button.style.backgroundColor = '#d6e5f7'; // Ripristina il colore predefinito se il pulsante non ha un colore assegnato
+                }
+            }
+
+            // Funzione per aggiornare tutti i pulsanti in base ai colori assegnati
+            function updateButtonColors() {
+                Object.keys(selectedColors).forEach(buttonId => {
+                    updateButtonColor(buttonId);
+                });
+            }
+
+            // Listener per i pulsanti (O, X, T)
+            document.querySelectorAll('.color-button-pref').forEach(button => {
+                button.addEventListener('click', () => {
+                    activeButton = button.id.replace('btn', '').replace('Out', ''); // Salviamo quale pulsante è attivo
+                });
+            });
+
+            // Funzione di gestione della visibilità dei marker (modificata per combinarsi con la funzione toggleMarker)
+            function toggleMarker(button) {
+                let color = selectedColors[button]; // Ottieni il colore associato al pulsante
+                shownMarkers_pref[button] = shownMarkers_pref[button]  != null ? null : color;
+                console.log("shown markers: ", shownMarkers_pref);
+
+                if(color){//controlla che color sia valido, non null
+                    if(Object.values(shownMarkers_pref).every(entry => entry == null)){//verifica se non ci sono bottoni preferiti premuti
+                        showAllMarkers();//siccome non staimo cercando un certo tipo di marker li mostriamo tutti
+                    }
+                    else if (color === shownMarkers_pref[button] || shownMarkers_pref[button] === null){//se il bottone appena cliccato prima non mostrava questo dipo di marker
+                        hideNotSelectedMarkers(); // Nascondi i marker diversi da quello selezionato
+                    }
+                }
+
+                //sotto per nascondere il colore premuto nei pulsanti preferiti.
+                /*if (color) {//qui devi fare in modo che tutti tranne quello selezionato sono nascosti
+                    // Se il marker è già nascosto, lo mostriamo
+                    if (hiddenMarkers_pref[button] === color) {
+                        ShowMarkers(color); // Mostra il marker
+                        hiddenMarkers_pref[button] = null; // Rimuoviamo il marker nascosto
+                    } else {
+                        // Se il marker è visibile, lo nascondiamo
+                        HideMarkers(color); // Nascondi il marker
+                        hiddenMarkers_pref[button] = color; // Imposta il marker come nascosto
+                    }
+                }*/
+            }
+
+            // Funzione per nascondere i marker diversi dal colore selezionato
+            function hideNotSelectedMarkers() {
+                let selectedMarkers = Object.values(shownMarkers_pref);
+                console.log("shown markers: ", shownMarkers_pref);
+
+                markers.forEach(function(marker) {
+                    if (! selectedMarkers.includes(marker.type)) {//se il marker è diverso da quelli selezionati lo nascondo
+                        marker.setOpacity(0); // Nascondi il marker
+                        marker.closePopup(); // Chiudi il popup se il marker è nascosto
+                    }
+                    else{
+                        marker.setOpacity(100); // Nascondi il marker
+                        marker.closePopup(); // Chiudi il popup se il marker è nascosto
+                    }
+                });
+                hideMenu();
+            }
+
+            // Funzione per mostrare i marker
+            function showAllMarkers() {
+                markers.forEach(function(marker) {
+                    marker.setOpacity(100);
+                });
+            }
+
+
+/*-----------------------------------------------------------------------------------------------------------*/
 
 /*-------------------------------------------------ICONE----------------------------------------------------*/
 
@@ -551,16 +666,8 @@
         // Se il livello di zoom è sufficiente, aggiungi un marker
         var lat = e.latlng.lat;
         var lng = e.latlng.lng;
-<<<<<<< HEAD
-
-        console.log("LATITUDINE:", lat);
-        console.log("LONGITUDINE:", lng);
-        
-        
-=======
         
 
->>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
 /*-------------------------------------------------------------------------------------------------------------*/
 
 
@@ -569,8 +676,6 @@
 
 /*----------------------------------------------EVENTI PULSANTI------------------------------------------------------*/
 
-<<<<<<< HEAD
-=======
 const ColoreToDescrizione = {
     red: "parcheggio_occupato",
     blue: 'parcheggio_libero',
@@ -578,7 +683,6 @@ const ColoreToDescrizione = {
     orange :"hotel",
     pink: "servizi_igenici"
 };
->>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
 
 /*-----------------------MARKER ROSSO------------------------*/
 
@@ -664,6 +768,7 @@ const ColoreToDescrizione = {
         };
 
     
+
   /*-----------------------------------------------------------*/
 
   /*-----------------------MARKER BLU--------------------------*/
@@ -1007,6 +1112,8 @@ const ColoreToDescrizione = {
     /*-----------------------------------------------------------*/
 
 
+
+
 /*-----------------UPDATE LINGUA MARKER-------------------------------*/
 
     // Ascolta il cambio lingua e aggiorna i marker
@@ -1083,11 +1190,10 @@ const ColoreToDescrizione = {
 
 
 
-
 /*-------------------------------------------------DB---------------------------------------------------*/ 
 
 function inviaCoordinate(lat, lng, tempo, colore, info) {
-    fetch('http://10.1.1.144/invia', {
+    fetch('http://10.1.1.193/invia', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -1,5 +1,3 @@
-<!--Script lingua modificato, link file modificati, aggiunto script DB-->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +12,14 @@
 
     <!--------------------LEAFLET CSS----------------------------->
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <!------------------------------------------------------------>
 
 
     <!--------------------PROVA_2 CSS----------------------------->
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='PROVA2.css') }}">
+      <link rel="stylesheet" href="PROVA2.css" />
 
     <!------------------------------------------------------------>
 
@@ -71,23 +69,23 @@
             <!-- Griglia dei servizi -->
             <div class="services-grid-disp-pref">
                 <div class="service-item-disp-pref" onclick="selectColor('red')">
-                    <img src="{{ url_for('static', filename='img/' + 'RED_ICON.png') }}" alt="Rosso">
+                    <img src="RED_ICON.png" alt="Rosso">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="parcheggio_occupato"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('green')">
-                    <img src="{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}" alt="Verde">
+                    <img src="GREEN_ICON.png" alt="Verde">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="ascensore"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('blue')">
-                    <img src="{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}" alt="Blu">
+                    <img src="BLUE_ICON.png" alt="Blu">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="parcheggio_libero"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('pink')">
-                    <img src="{{ url_for('static', filename='img/' + 'PINK_ICON.png') }}" alt="Rosa">
+                    <img src="PINK_ICON.png" alt="Rosa">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="hotel"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('orange')">
-                    <img src="{{ url_for('static', filename='img/' + 'ORANGE_ICON.png') }}" alt="Arancione">
+                    <img src="ORANGE_ICON.png" alt="Arancione">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="servizi_igenici"></h2>
                 </div>
             </div>
@@ -140,7 +138,7 @@
             let previousColor = selectedColors[button];
             if (previousColor && previousColor !== color) {
                 markers_pref[previousColor].addTo(map);
-                shownMarkers_pref[button] = null;
+                hiddenMarkers_pref[button] = null;
             }
 
             for (let key in selectedColors) {
@@ -205,15 +203,15 @@
         <h2 style="color: black;" data-key="servizidisponibili">Servizi Disponibili</h2>
         <div class="services-grid-disp">
             <div class="service-item-disp">
-                <img src="{{ url_for('static', filename='img/' + 'RED_ICON.png') }}" alt="Emergenze">
+                <img src="RED_ICON.png" alt="Emergenze">
                 <p style="color: black; font-size: 13px;" data-key="parcheggio_occupato">Emergenze</p>
             </div>
             <div class="service-item-disp">
-                <img src="{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}" alt="Ascensore">
+                <img src="GREEN_ICON.png" alt="Ascensore">
                 <p style="color: black; font-size: 13px;" data-key="ascensore">Ascensore</p>
             </div>
             <div class="service-item-disp">
-                <img src="{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}" alt="Parcheggio">
+                <img src="BLUE_ICON.png" alt="Parcheggio">
                 <p style="color: black; font-size: 13px;" data-key="parcheggio_libero">Parcheggio</p>
             </div>
         </div>
@@ -252,12 +250,13 @@
                           </div>
                       </div>
 
-                      <a href="#Impostazioni" data-key='impostazioni'>Impostazioni</a>
-                      <a href="#Informazioni" data-key='informazioni'>Info su IHELP</a>
-                      <a href="#Partner" data-key='partner'>Partner</a>
-                      <a href="#Donazioni" data-key='donazioni'>Donazioni</a>
-                      <a href="#Assistenza" data-key='assistenza'>Assistenza</a>
-                      <a href="#Contattaci" data-key='contattaci'>Contattaci</a>
+
+                      <a href="#Impostazioni" data-key="impostazioni">Impostazioni</a>
+                      <a href="#Informazioni" data-key="informazioni">Info su IHELP</a>
+                      <a href="#Partner" data-key="partner">Partner</a>
+                      <a href="#Donazioni" data-key="donazioni">Donazioni</a>
+                      <a href="#Assistenza" data-key="assistenza">Assistenza</a>
+                      <a href="#Contattaci" data-key="contattaci">Contattaci</a>
                   </div>
               </div>
               <input placeholder="Cerca su IHELP" class="input" type="text" data-key="placeholder">
@@ -270,23 +269,23 @@
             </div>
         </div>
         <div class="button-container">
-            <input type="checkbox" id="menu-toggle" class="checkbox"> 
+            <input type="checkbox" id="menu-toggle" class="checkbox">
             <label for="menu-toggle" class="button-menu"></label>
         
             <button id="btnOOut" class="color-button-pref ch-option-a" onclick="toggleMarker('O')">O</button>
             <button id="btnXOut" class="color-button-pref ch-option-b" onclick="toggleMarker('X')">X</button>
             <button id="btnTOut" class="color-button-pref ch-option-c" onclick="toggleMarker('T')">T</button>
-            
         </div>
 
   </div>
 
   <!------------------------------------------------------------------------------------------------------------->
 
-  <script src="{{ url_for('static', filename='script/' + 'button.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='script/' + 'servizi.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='script/' + 'servizi_disponibili.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='script/' + 'translations.js') }}" defer></script>
+
+  <script src="button.js" defer></script>
+  <script src="servizi.js" defer></script>
+  <script src="servizi_disponibili.js" defer></script>
+  <script src="translations.js" defer></script>
   
   <script>
 
@@ -316,14 +315,14 @@
     /*-------------------------------------------------------------------*/
 
     /*-------------------------CAMBIA LINGUE------------------------------*/
-    function changeLanguage(lang) {
+      function changeLanguage(lang) {
       localStorage.setItem('selectedLanguage', lang);
       applyTranslations(lang);
       closePopup();
-    }
+      }
 
-    function applyTranslations(lang) {
-      fetch('static/script/translations.js')
+      function applyTranslations(lang) {
+      fetch('translations.js')
         .then(response => response.text())
         .then(script => {
           eval(script);
@@ -339,7 +338,7 @@
             }
           });
         });
-    }
+      }
 
     document.addEventListener("DOMContentLoaded", () => {
       const savedLang = localStorage.getItem('selectedLanguage') || 'it';
@@ -361,7 +360,6 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-
     /*--------------------------------------------INIZIO SCRIPT---------------------------------------------*/
 
     // Crea la mappa
@@ -370,9 +368,9 @@
 
 
 
-    let selectedColors = { O: null, X: null, T: null };
-    let shownMarkers_pref = { O: null, X: null, T: null };
-    let activeButton = 'O';
+        let selectedColors = { O: null, X: null, T: null };
+        let hiddenMarkers_pref = { O: null, X: null, T: null };
+        let activeButton = 'O';
 
 
     var minZoomToEdit = 17;
@@ -383,7 +381,160 @@
 
 
 
-//modificate un po' quasi tutte le funzioni qui (8-04-25), da copiare su facchinetti (9-04-25)
+/*--------------------------------------------CHECKBOX PREFERITI---------------------------------------------*/
+
+            // Funzione per selezionare un colore nel popup e assegnarlo al pulsante attivo
+            function selectColor(color) {
+                // Controlliamo se il colore è già stato assegnato a un altro pulsante
+                Object.keys(selectedColors).forEach(buttonId => {
+                    if (selectedColors[buttonId] === color) {
+                        selectedColors[buttonId] = null; // Rimuoviamo il colore dal pulsante precedente
+                        updateButtonColor(buttonId); // Aggiorniamo la visualizzazione
+                    }
+                });
+
+                // Assegniamo il colore al pulsante attualmente selezionato
+                selectedColors[activeButton] = color;
+                updateButtonColor(activeButton); // Aggiorniamo il colore del pulsante selezionato
+            }
+
+            // Funzione per aggiornare il colore visivo di un singolo pulsante
+            function updateButtonColor(buttonId) {
+                let button = document.getElementById('btn' + buttonId + 'Out');
+                if (selectedColors[buttonId]) {
+                    button.style.backgroundColor = selectedColors[buttonId]; // Imposta il colore selezionato
+                } else {
+                    button.style.backgroundColor = '#007bff'; // Ripristina il colore predefinito se il pulsante non ha un colore assegnato
+                }
+            }
+
+            // Funzione per aggiornare tutti i pulsanti in base ai colori assegnati
+            function updateButtonColors() {
+                Object.keys(selectedColors).forEach(buttonId => {
+                    updateButtonColor(buttonId);
+                });
+            }
+
+            // Listener per i pulsanti (O, X, T)
+            document.querySelectorAll('.color-button-pref').forEach(button => {
+                button.addEventListener('click', () => {
+                    activeButton = button.id.replace('btn', '').replace('Out', ''); // Salviamo quale pulsante è attivo
+                });
+            });
+
+            // Funzione di gestione della visibilità dei marker (modificata per combinarsi con la funzione toggleMarker)
+            function toggleMarker(button) {
+                let color = selectedColors[button]; // Ottieni il colore associato al pulsante
+
+                if (color) {
+                    // Se il marker è già nascosto, lo mostriamo
+                    if (hiddenMarkers_pref[button] === color) {
+                        ShowMarkers(color); // Mostra il marker
+                        hiddenMarkers_pref[button] = null; // Rimuoviamo il marker nascosto
+                    } else {
+                        // Se il marker è visibile, lo nascondiamo
+                        HideMarkers(color); // Nascondi il marker
+                        hiddenMarkers_pref[button] = color; // Imposta il marker come nascosto
+                    }
+                }
+            }
+
+            // Funzione per nascondere i marker
+            function HideMarkers(marker_type) {
+                markers.forEach(function(marker) {
+                    if (marker.type == marker_type) {
+                        marker.setOpacity(0); // Nascondi il marker
+                        marker.closePopup(); // Chiudi il popup se il marker è nascosto
+                    }
+                });
+                hideMenu(); // Nascondi il menu (se presente)
+            }
+
+            // Funzione per mostrare i marker
+            function ShowMarkers(marker_type) {
+                markers.forEach(function(marker) {
+                    if (marker.type == marker_type) {
+                        marker.setOpacity(100); // Mostra il marker
+                    }
+                });
+            }
+
+            // Funzione per selezionare un colore nel popup e assegnarlo al pulsante attivo
+            function selectColor(color) {
+                let previousColor = selectedColors[activeButton]; // Colore precedentemente assegnato al pulsante attivo
+
+                // Se il colore cambia, rendiamo visibili i marker del vecchio colore
+                if (previousColor && previousColor !== color) {
+                    ShowMarkers(previousColor);
+                }
+
+                // Controlliamo se il colore è già stato assegnato a un altro pulsante e lo rimuoviamo
+                Object.keys(selectedColors).forEach(buttonId => {
+                    if (selectedColors[buttonId] === color) {
+                        selectedColors[buttonId] = null; // Rimuoviamo il colore dal pulsante precedente
+                        updateButtonColor(buttonId);
+                    }
+                });
+
+                // Assegniamo il nuovo colore al pulsante attivo
+                selectedColors[activeButton] = color;
+                updateButtonColor(activeButton);
+
+                // Se il nuovo colore era stato nascosto, rendilo visibile
+                ShowMarkers(color);
+            }
+
+            // Funzione per aggiornare il colore visivo di un singolo pulsante
+            function updateButtonColor(buttonId) {
+                let button = document.getElementById('btn' + buttonId + 'Out');
+                if (selectedColors[buttonId]) {
+                    button.style.backgroundColor = selectedColors[buttonId]; // Imposta il colore selezionato
+                } else {
+                    button.style.backgroundColor = '#007bff'; // Ripristina il colore predefinito
+                }
+            }
+
+            // Funzione per aggiornare tutti i pulsanti in base ai colori assegnati
+            function updateButtonColors() {
+                Object.keys(selectedColors).forEach(buttonId => {
+                    updateButtonColor(buttonId);
+                });
+            }
+
+            // Funzione per nascondere i marker di un determinato colore
+            function HideMarkers(marker_type) {
+                markers.forEach(marker => {
+                    if (marker.type == marker_type) {
+                        marker.setOpacity(0); // Nasconde il marker
+                        marker.closePopup();
+                    }
+                });
+            }
+
+            // Funzione per mostrare i marker di un determinato colore
+            function ShowMarkers(marker_type) {
+                markers.forEach(marker => {
+                    if (marker.type == marker_type) {
+                        marker.setOpacity(1); // Mostra il marker
+                    }
+                });
+            }
+
+            // Listener per i pulsanti (O, X, T)
+            document.querySelectorAll('.color-button-pref').forEach(button => {
+                button.addEventListener('click', () => {
+                    activeButton = button.id.replace('btn', '').replace('Out', ''); // Salviamo quale pulsante è attivo
+                });
+            });
+
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -393,7 +544,7 @@
   /*-----------------------MARKER ROSSO------------------------*/
 
           var redIcon = L.icon({
-          iconUrl: "{{ url_for('static', filename='img/' + 'RED_ICON.png') }}", // Immagine del marker rosso
+          iconUrl: 'RED_ICON.png', // Immagine del marker rosso
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -406,7 +557,7 @@
   /*-----------------------MARKER BLU--------------------------*/
 
           var blueIcon = L.icon({
-          iconUrl: "{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}", // Immagine del marker blu
+          iconUrl: 'BLUE_ICON.png', // Immagine del marker blu
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -418,7 +569,7 @@
   /*-----------------------MARKER VERDE------------------------*/
 
           var greenIcon = L.icon({
-          iconUrl: "{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}", // Immagine del marker verde
+          iconUrl: 'GREEN_ICON.png', // Immagine del marker verde
           iconSize: [35, 42], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -430,7 +581,7 @@
   /*-----------------------MARKER ARANCIONE------------------------*/
 
           var orangeIcon = L.icon({
-          iconUrl: "{{ url_for('static', filename='img/' + 'ORANGE_ICON.png') }}", // Immagine del marker arancione
+          iconUrl: 'ORANGE_ICON.png', // Immagine del marker arancione
           iconSize: [35, 40], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -442,7 +593,7 @@
   /*-----------------------MARKER ROSA------------------------*/
 
           var pinkIcon = L.icon({
-          iconUrl: "{{ url_for('static', filename='img/' + 'PINK_ICON.png') }}", // Immagine del marker arancione
+          iconUrl: 'PINK_ICON.png', // Immagine del marker arancione
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -551,16 +702,14 @@
         // Se il livello di zoom è sufficiente, aggiungi un marker
         var lat = e.latlng.lat;
         var lng = e.latlng.lng;
-<<<<<<< HEAD
 
         console.log("LATITUDINE:", lat);
         console.log("LONGITUDINE:", lng);
         
         
-=======
+
         
 
->>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
 /*-------------------------------------------------------------------------------------------------------------*/
 
 
@@ -569,16 +718,10 @@
 
 /*----------------------------------------------EVENTI PULSANTI------------------------------------------------------*/
 
-<<<<<<< HEAD
-=======
-const ColoreToDescrizione = {
-    red: "parcheggio_occupato",
-    blue: 'parcheggio_libero',
-    green: 'ascensore',
-    orange :"hotel",
-    pink: "servizi_igenici"
-};
->>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
+
+
+
+
 
 /*-----------------------MARKER ROSSO------------------------*/
 
@@ -586,7 +729,6 @@ const ColoreToDescrizione = {
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
-            const descrizione = ColoreToDescrizione['red'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
@@ -600,13 +742,9 @@ const ColoreToDescrizione = {
                 minutes: 0,
                 seconds: 0
             };
-
-            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
-            console.log("LATITUDINE:", lat);
-            console.log("LONGITUDINE:", lng);
+            
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`COLORE: ${marker_r.type}`);
-            console.log(`TIPO: ${descrizione}`);
+            console.log(`TIPO: ${marker_r.type}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeRosso(startTime, lang) {
@@ -664,7 +802,13 @@ const ColoreToDescrizione = {
         };
 
     
+
   /*-----------------------------------------------------------*/
+
+
+
+
+
 
   /*-----------------------MARKER BLU--------------------------*/
 
@@ -672,7 +816,6 @@ const ColoreToDescrizione = {
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
-            const descrizione = ColoreToDescrizione['blue'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
@@ -687,12 +830,8 @@ const ColoreToDescrizione = {
                 seconds: 0
             };
         
-            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
-            console.log("LATITUDINE:", lat);
-            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`COLORE: ${marker_r.type}`);
-            console.log(`TIPO: ${descrizione}`);
+            console.log(`TIPO: ${marker_r.type}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeBlu(startTime, lang) {
@@ -751,13 +890,17 @@ const ColoreToDescrizione = {
 
   /*-----------------------------------------------------------*/
 
+
+
+
+
+
   /*-----------------------MARKER VERDE------------------------*/
 
         greenButton.onclick = function () {
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
-            const descrizione = ColoreToDescrizione['green'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
@@ -772,12 +915,8 @@ const ColoreToDescrizione = {
                 seconds: 0
             };
         
-            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
-            console.log("LATITUDINE:", lat);
-            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`COLORE: ${marker_r.type}`);
-            console.log(`TIPO: ${descrizione}`);
+            console.log(`TIPO: ${marker_r.type}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeVerde(startTime, lang) {
@@ -842,7 +981,6 @@ const ColoreToDescrizione = {
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
-            const descrizione = ColoreToDescrizione['orange'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: orangeIcon }).addTo(map);
@@ -857,12 +995,8 @@ const ColoreToDescrizione = {
                 seconds: 0
             };
         
-            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
-            console.log("LATITUDINE:", lat);
-            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`COLORE: ${marker_r.type}`);
-            console.log(`TIPO: ${descrizione}`);
+            console.log(`TIPO: ${marker_r.type}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeArancione(startTime, lang) {
@@ -927,7 +1061,6 @@ const ColoreToDescrizione = {
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
-            const descrizione = ColoreToDescrizione['pink'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: pinkIcon }).addTo(map);
@@ -942,12 +1075,8 @@ const ColoreToDescrizione = {
                 seconds: 0
             };
         
-            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
-            console.log("LATITUDINE:", lat);
-            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`COLORE: ${marker_r.type}`);
-            console.log(`TIPO: ${descrizione}`);
+            console.log(`TIPO: ${marker_r.type}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeRosa(startTime, lang) {
@@ -1005,6 +1134,8 @@ const ColoreToDescrizione = {
         };        
 
     /*-----------------------------------------------------------*/
+
+
 
 
 /*-----------------UPDATE LINGUA MARKER-------------------------------*/
@@ -1081,40 +1212,6 @@ const ColoreToDescrizione = {
 
 /*-----------------------------------------------------------------------------------------------------------*/
 
-
-
-
-/*-------------------------------------------------DB---------------------------------------------------*/ 
-
-function inviaCoordinate(lat, lng, tempo, colore, info) {
-    fetch('http://10.1.1.144/invia', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            lat: lat,
-            lng: lng,
-            di: tempo, // Esempio di data e ora
-            col: colore, // Esempio di colore
-            desc: info, // Esempio di tipologia
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Errore nella risposta del server');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Risposta server:', data);
-    })
-    .catch(error => {
-        console.error('Errore:', error);
-    });
-}
-
-/*------------------------------------------------------------------------------------------------------*/
 
 
 
