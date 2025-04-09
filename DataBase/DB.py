@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import sqlite3
 
 app = Flask(__name__)
@@ -17,42 +17,44 @@ with get_db_connection() as conn:
             latitudine DECIMAL(300,200) NOT NULL,
             longitudine DECIMAL(300,200) NOT NULL,
             data VARCHAR(1000) NOT NULL,
-            colore VARCHAR(7) NOT NULL,
-            tipologia VARCHAR(255) NOT NULL
+            colore VARCHAR(1000) NOT NULL,
+            descrizione VARCHAR(255) NOT NULL
         );
     ''')
     conn.commit()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('prova.html')
 
 @app.route('/invia', methods=['POST'])
 def controllo():
-    if(request.method == 'POST'):
-        longitudine = request.form.get('')
-        latitudine = request.form.get('')
-        Td = request.form.get('')   #Tempo di (stringa totale)
-        Td = Td.split()
-        colore = request.form.get('')
-        tipo = request.form.get('')
+    if request.method == 'POST':
+        dati = request.get_json()
+        longitudine = dati.get('lng')
+        latitudine = dati.get('lat')
+        Td = dati.get('di')   # Tempo di (stringa totale)
+        #Td = Td.split()
+        colore = dati.get('col')
+        tipo = dati.get('desc')
 
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO marker(latitudine, longitudine, data, colore, tipologia)
+                INSERT INTO marker(latitudine, longitudine, data, colore, descrizione)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (latitudine, longitudine, Td[0:6], colore, tipo))
+            ''', (latitudine, longitudine, Td, colore, tipo))
             conn.commit()
-        return redirect(url_for('index'))
+        
+        return redirect(url_for('prova'))
     
 @app.route('/')
 def lista():
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT latitudine, longitudine, data, colore, tipologia FROM marker")
-        latitudine, longitudine, data, colore, tipologia = cursor.fetchall()
-    return render_template('index.html', lat = latitudine, long = longitudine, dat = data, color = colore, tipol = tipologia)
+        cursor.execute("SELECT latitudine, longitudine, data, colore, descrizione FROM marker")
+        latitudine, longitudine, data, colore, descrizione = cursor.fetchall()
+    return render_template('prova.html', lat = latitudine, long = longitudine, dat = data, color = colore, descr = descrizione)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

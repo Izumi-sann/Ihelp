@@ -1,3 +1,5 @@
+<!--Script lingua modificato, link file modificati, aggiunto script DB-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +14,14 @@
 
     <!--------------------LEAFLET CSS----------------------------->
 
-      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <!------------------------------------------------------------>
 
 
     <!--------------------PROVA_2 CSS----------------------------->
 
-      <link rel="stylesheet" href="PROVA2.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='PROVA2.css') }}">
 
     <!------------------------------------------------------------>
 
@@ -69,23 +71,23 @@
             <!-- Griglia dei servizi -->
             <div class="services-grid-disp-pref">
                 <div class="service-item-disp-pref" onclick="selectColor('red')">
-                    <img src="RED_ICON.png" alt="Rosso">
+                    <img src="{{ url_for('static', filename='img/' + 'RED_ICON.png') }}" alt="Rosso">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="parcheggio_occupato"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('green')">
-                    <img src="GREEN_ICON.png" alt="Verde">
+                    <img src="{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}" alt="Verde">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="ascensore"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('blue')">
-                    <img src="BLUE_ICON.png" alt="Blu">
+                    <img src="{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}" alt="Blu">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="parcheggio_libero"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('pink')">
-                    <img src="PINK_ICON.png" alt="Rosa">
+                    <img src="{{ url_for('static', filename='img/' + 'PINK_ICON.png') }}" alt="Rosa">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="hotel"></h2>
                 </div>
                 <div class="service-item-disp-pref" onclick="selectColor('orange')">
-                    <img src="ORANGE_ICON.png" alt="Arancione">
+                    <img src="{{ url_for('static', filename='img/' + 'ORANGE_ICON.png') }}" alt="Arancione">
                     <h2 style="color: black; font-size: 13px; font-weight: lighter;" data-key="servizi_igenici"></h2>
                 </div>
             </div>
@@ -203,15 +205,15 @@
         <h2 style="color: black;" data-key="servizidisponibili">Servizi Disponibili</h2>
         <div class="services-grid-disp">
             <div class="service-item-disp">
-                <img src="RED_ICON.png" alt="Emergenze">
+                <img src="{{ url_for('static', filename='img/' + 'RED_ICON.png') }}" alt="Emergenze">
                 <p style="color: black; font-size: 13px;" data-key="parcheggio_occupato">Emergenze</p>
             </div>
             <div class="service-item-disp">
-                <img src="GREEN_ICON.png" alt="Ascensore">
+                <img src="{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}" alt="Ascensore">
                 <p style="color: black; font-size: 13px;" data-key="ascensore">Ascensore</p>
             </div>
             <div class="service-item-disp">
-                <img src="BLUE_ICON.png" alt="Parcheggio">
+                <img src="{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}" alt="Parcheggio">
                 <p style="color: black; font-size: 13px;" data-key="parcheggio_libero">Parcheggio</p>
             </div>
         </div>
@@ -250,13 +252,12 @@
                           </div>
                       </div>
 
-
-                      <a href="#Impostazioni" data-key="impostazioni">Impostazioni</a>
-                      <a href="#Informazioni" data-key="informazioni">Info su IHELP</a>
-                      <a href="#Partner" data-key="partner">Partner</a>
-                      <a href="#Donazioni" data-key="donazioni">Donazioni</a>
-                      <a href="#Assistenza" data-key="assistenza">Assistenza</a>
-                      <a href="#Contattaci" data-key="contattaci">Contattaci</a>
+                      <a href="#Impostazioni" data-key='impostazioni'>Impostazioni</a>
+                      <a href="#Informazioni" data-key='informazioni'>Info su IHELP</a>
+                      <a href="#Partner" data-key='partner'>Partner</a>
+                      <a href="#Donazioni" data-key='donazioni'>Donazioni</a>
+                      <a href="#Assistenza" data-key='assistenza'>Assistenza</a>
+                      <a href="#Contattaci" data-key='contattaci'>Contattaci</a>
                   </div>
               </div>
               <input placeholder="Cerca su IHELP" class="input" type="text" data-key="placeholder">
@@ -282,11 +283,10 @@
 
   <!------------------------------------------------------------------------------------------------------------->
 
-
-  <script src="button.js" defer></script>
-  <script src="servizi.js" defer></script>
-  <script src="servizi_disponibili.js" defer></script>
-  <script src="translations.js" defer></script>
+  <script src="{{ url_for('static', filename='script/' + 'button.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='script/' + 'servizi.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='script/' + 'servizi_disponibili.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='script/' + 'translations.js') }}" defer></script>
   
   <script>
 
@@ -316,14 +316,14 @@
     /*-------------------------------------------------------------------*/
 
     /*-------------------------CAMBIA LINGUE------------------------------*/
-      function changeLanguage(lang) {
+    function changeLanguage(lang) {
       localStorage.setItem('selectedLanguage', lang);
       applyTranslations(lang);
       closePopup();
-      }
+    }
 
-      function applyTranslations(lang) {
-      fetch('translations.js')
+    function applyTranslations(lang) {
+      fetch('static/script/translations.js')
         .then(response => response.text())
         .then(script => {
           eval(script);
@@ -339,7 +339,7 @@
             }
           });
         });
-      }
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
       const savedLang = localStorage.getItem('selectedLanguage') || 'it';
@@ -361,6 +361,7 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+
     /*--------------------------------------------INIZIO SCRIPT---------------------------------------------*/
 
     // Crea la mappa
@@ -392,7 +393,7 @@ d
   /*-----------------------MARKER ROSSO------------------------*/
 
           var redIcon = L.icon({
-          iconUrl: 'RED_ICON.png', // Immagine del marker rosso
+          iconUrl: "{{ url_for('static', filename='img/' + 'RED_ICON.png') }}", // Immagine del marker rosso
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -405,7 +406,7 @@ d
   /*-----------------------MARKER BLU--------------------------*/
 
           var blueIcon = L.icon({
-          iconUrl: 'BLUE_ICON.png', // Immagine del marker blu
+          iconUrl: "{{ url_for('static', filename='img/' + 'BLUE_ICON.png') }}", // Immagine del marker blu
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -417,7 +418,7 @@ d
   /*-----------------------MARKER VERDE------------------------*/
 
           var greenIcon = L.icon({
-          iconUrl: 'GREEN_ICON.png', // Immagine del marker verde
+          iconUrl: "{{ url_for('static', filename='img/' + 'GREEN_ICON.png') }}", // Immagine del marker verde
           iconSize: [35, 42], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -429,7 +430,7 @@ d
   /*-----------------------MARKER ARANCIONE------------------------*/
 
           var orangeIcon = L.icon({
-          iconUrl: 'ORANGE_ICON.png', // Immagine del marker arancione
+          iconUrl: "{{ url_for('static', filename='img/' + 'ORANGE_ICON.png') }}", // Immagine del marker arancione
           iconSize: [35, 40], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -441,7 +442,7 @@ d
   /*-----------------------MARKER ROSA------------------------*/
 
           var pinkIcon = L.icon({
-          iconUrl: 'PINK_ICON.png', // Immagine del marker arancione
+          iconUrl: "{{ url_for('static', filename='img/' + 'PINK_ICON.png') }}", // Immagine del marker arancione
           iconSize: [35, 41], // Dimensioni del marker
           iconAnchor: [12, 41], // Punto di ancoraggio
           popupAnchor: [1, -34], // Posizione del popup
@@ -550,11 +551,16 @@ d
         // Se il livello di zoom è sufficiente, aggiungi un marker
         var lat = e.latlng.lat;
         var lng = e.latlng.lng;
+<<<<<<< HEAD
 
         console.log("LATITUDINE:", lat);
         console.log("LONGITUDINE:", lng);
         
         
+=======
+        
+
+>>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
 /*-------------------------------------------------------------------------------------------------------------*/
 
 
@@ -563,6 +569,16 @@ d
 
 /*----------------------------------------------EVENTI PULSANTI------------------------------------------------------*/
 
+<<<<<<< HEAD
+=======
+const ColoreToDescrizione = {
+    red: "parcheggio_occupato",
+    blue: 'parcheggio_libero',
+    green: 'ascensore',
+    orange :"hotel",
+    pink: "servizi_igenici"
+};
+>>>>>>> ea2dd2c605e7fe8e3800f1b0f52a970bc69a9af3
 
 /*-----------------------MARKER ROSSO------------------------*/
 
@@ -570,6 +586,7 @@ d
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
+            const descrizione = ColoreToDescrizione['red'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: redIcon }).addTo(map);
@@ -583,9 +600,13 @@ d
                 minutes: 0,
                 seconds: 0
             };
-            
+
+            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
+            console.log("LATITUDINE:", lat);
+            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`TIPO: ${marker_r.type}`);
+            console.log(`COLORE: ${marker_r.type}`);
+            console.log(`TIPO: ${descrizione}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeRosso(startTime, lang) {
@@ -651,6 +672,7 @@ d
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
+            const descrizione = ColoreToDescrizione['blue'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: blueIcon }).addTo(map);
@@ -665,8 +687,12 @@ d
                 seconds: 0
             };
         
+            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
+            console.log("LATITUDINE:", lat);
+            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`TIPO: ${marker_r.type}`);
+            console.log(`COLORE: ${marker_r.type}`);
+            console.log(`TIPO: ${descrizione}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeBlu(startTime, lang) {
@@ -731,6 +757,7 @@ d
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
+            const descrizione = ColoreToDescrizione['green'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: greenIcon }).addTo(map);
@@ -745,8 +772,12 @@ d
                 seconds: 0
             };
         
+            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
+            console.log("LATITUDINE:", lat);
+            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`TIPO: ${marker_r.type}`);
+            console.log(`COLORE: ${marker_r.type}`);
+            console.log(`TIPO: ${descrizione}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeVerde(startTime, lang) {
@@ -811,6 +842,7 @@ d
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
+            const descrizione = ColoreToDescrizione['orange'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: orangeIcon }).addTo(map);
@@ -825,8 +857,12 @@ d
                 seconds: 0
             };
         
+            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
+            console.log("LATITUDINE:", lat);
+            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`TIPO: ${marker_r.type}`);
+            console.log(`COLORE: ${marker_r.type}`);
+            console.log(`TIPO: ${descrizione}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeArancione(startTime, lang) {
@@ -891,6 +927,7 @@ d
             const now = new Date(); // Ora attuale al momento dell'inserimento
             const name = "Edoardo"; // Nome da aggiungere al popup
             const lang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || navigator.language.slice(0, 2) || 'en';
+            const descrizione = ColoreToDescrizione['pink'];
 
             // Crea il marker
             var marker_r = L.marker(latlng, { icon: pinkIcon }).addTo(map);
@@ -905,8 +942,12 @@ d
                 seconds: 0
             };
         
+            inviaCoordinate(lat, lng, elapsed.startTime, marker_r.type, descrizione);
+            console.log("LATITUDINE:", lat);
+            console.log("LONGITUDINE:", lng);
             console.log(`TEMPO: ${elapsed.startTime}`);
-            console.log(`TIPO: ${marker_r.type}`);
+            console.log(`COLORE: ${marker_r.type}`);
+            console.log(`TIPO: ${descrizione}`);
 
             // Funzione per calcolare il tempo trascorso con traduzioni dinamiche
             function getElapsedTimeRosa(startTime, lang) {
@@ -1040,6 +1081,40 @@ d
 
 /*-----------------------------------------------------------------------------------------------------------*/
 
+
+
+
+/*-------------------------------------------------DB---------------------------------------------------*/ 
+
+function inviaCoordinate(lat, lng, tempo, colore, info) {
+    fetch('http://10.1.1.144/invia', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            lat: lat,
+            lng: lng,
+            di: tempo, // Esempio di data e ora
+            col: colore, // Esempio di colore
+            desc: info, // Esempio di tipologia
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Errore nella risposta del server');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Risposta server:', data);
+    })
+    .catch(error => {
+        console.error('Errore:', error);
+    });
+}
+
+/*------------------------------------------------------------------------------------------------------*/
 
 
 
