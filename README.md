@@ -1,6 +1,6 @@
 # IHELP: Accessibile, ovunque tu sia
 
-[![Logo IHELP](https://raw.githubusercontent.com/Izumi-sann/Ihelp/refs/heads/main/IHELP_logo.png?token=GHSAT0AAAAAADBDH63DXLTUDLWWP6IDFYSWZ7SYNXQ)](https://youtube.com/shorts/_sW7588oygg?feature=share)
+[![Logo IHELP](https://ihelp.itisdalmine.edu.it/IHELP_logo.png)](https://youtube.com/shorts/_sW7588oygg?feature=share)
 
 ## Obbiettivo dell'iniziativa
 Il nostro fine ultimo è di garantire alle persone con disabilità di vario genere la possibilità di conoscere sempre ed in tempo reale la posizione di tutti i servizi dedicati a loro a livello globale. 
@@ -29,4 +29,4 @@ Per lo sviluppo futuro dell’applicazione stiamo provando Android Studio con Ja
 Per la mappa interattiva stiamo utilizzando un’API di OpenStreetMap (Non definitiva), per poi possibilmente passare ad una collaborazione con Waze.
 
 ### __[link al video](https://iismarconi-my.sharepoint.com/personal/cesari_edoardo_06_itisdalmine_edu_it/_layouts/15/stream.aspx?id=%2Fpersonal%2Fcesari_edoardo_06_itisdalmine_edu_it%2FDocuments%2FG04_AREA_SALUTE%2FSCHEDA%20TECNICA%2FVideo%20Prototipo%20Web%2Emp4&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E2bda704f-92c9-4302-afcb-a130a701d3ad)__
-![descrizione mappa](https://raw.githubusercontent.com/Izumi-sann/Ihelp/refs/heads/main/IHELP_mappa.png?token=GHSAT0AAAAAADBDH63CA7WLVY6VVTY6X7KEZ7SYRDQ)
+![descrizione mappa](https://ihelp.itisdalmine.edu.it/IHELP_mappa.png)
