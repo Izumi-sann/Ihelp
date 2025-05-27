@@ -1,6 +1,6 @@
 # IHELP: Accessibile, ovunque tu sia
 
-[![Logo IHELP](https://ihelp.itisdalmine.edu.it/IHELP_logo.png)](https://youtube.com/shorts/_sW7588oygg?feature=share)
+[![Logo IHELP](https://ihelp.itisdalmine.edu.it/IHELP_logo.png)](https://ihelp.itisdalmine.edu.it)
 
 ## Obbiettivo dell'iniziativa
 Il nostro fine ultimo è di garantire alle persone con disabilità di vario genere la possibilità di conoscere sempre ed in tempo reale la posizione di tutti i servizi dedicati a loro a livello globale. 
